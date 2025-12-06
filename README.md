@@ -1,120 +1,238 @@
-MVP de Engenharia de Dados | Wine Dataset
-MVP de Engenharia de Dados – Análise do Wine Dataset (UCI)
+ MVP – Engenharia de Dados
+Análise Química do Wine Dataset (UCI Machine Learning Repository)
+ Objetivo
 
-Este repositório contém o desenvolvimento completo de um pipeline de engenharia de dados utilizando o Wine Dataset (UCI Machine Learning Repository) dentro da plataforma Databricks, aplicando a Arquitetura Medallion (Bronze, Silver e Gold), consultas SQL, visualizações em Python, modelagem e análise exploratória dos dados.
+Este MVP tem como objetivo construir um pipeline de dados em nuvem utilizando o Databricks Community Edition para analisar o Wine Dataset, um conjunto de dados amplamente utilizado em projetos de Machine Learning. O pipeline envolve as etapas de busca, coleta, modelagem, carga, transformação e análise dos dados, utilizando a Arquitetura Medallion (Bronze, Silver e Gold).
 
-O objetivo principal foi responder 15 perguntas analíticas relacionadas às características químicas dos vinhos, demonstrando a construção de um fluxo completo de ingestão, limpeza, transformação e análise no ambiente de nuvem.
+O problema que este MVP busca resolver é a necessidade de compreender como os atributos químicos dos vinhos se relacionam entre si e como influenciam características como classe, intensidade e composição química. Para isso, serão respondidas 15 perguntas analíticas, definidas antes da fase de coleta e essenciais para o entendimento do comportamento do dataset.
 
- Objetivos do Projeto
+As perguntas são:
 
-Construir um pipeline de dados na nuvem usando Databricks
+Qual vinho apresenta o maior valor alcoólico (Alcohol)?
 
-Aplicar a arquitetura Medallion (Bronze, Silver e Gold)
+Qual é o menor valor de acidez málica (Malic_acid) registrado?
 
-Criar tabelas estruturadas com Spark e SQL
+Qual é a média de Ash para cada classe de vinho?
 
-Realizar análises estatísticas e exploratórias
+Qual é a mediana da variável Hue?
 
-Desenvolver visualizações em Python (Matplotlib, Seaborn)
+Qual é o valor máximo de Proline encontrado?
 
-Responder às 15 perguntas analíticas propostas
+Quantos vinhos possuem teor alcoólico acima de 13?
 
-Documentar modelagem, qualidade dos dados e autoavaliação
+Qual é a média de Flavanoids por classe?
 
- Tecnologias Utilizadas
+Qual vinho apresenta a maior Color_intensity e qual sua classe?
 
-Databricks Community Edition
+Qual é a média de Alcohol para cada classe?
 
-Apache Spark (SQL + DataFrames)
+Qual é o valor mínimo e máximo de Total_phenols?
+
+Quantos vinhos possuem Nonflavanoid_phenols acima de 0.4?
+
+Qual é a média de Magnesium para vinhos da Classe 3?
+
+Qual é o desvio padrão de Alcalinity_of_ash?
+
+Qual é a porcentagem de vinhos com Color_intensity acima de 5?
+
+Qual a média de Proline entre vinhos com teor alcoólico acima de 13?
+
+Ao final, espera-se fornecer uma análise clara e estruturada das propriedades químicas do vinho, além de demonstrar a construção de um pipeline completo dentro do Databricks.
+
+ Fonte dos Dados e Coleta
+
+Os dados utilizados neste projeto pertencem ao clássico Wine Dataset, disponibilizado publicamente no UCI Machine Learning Repository.
+
+🔗 Fonte oficial dos dados
+
+UCI Machine Learning Repository – Wine Dataset
+https://archive.ics.uci.edu/ml/datasets/wine
+
+O dataset original contém 178 amostras de vinho e 13 variáveis químicas, além da variável-alvo (Class).
+
+2.1 Tabela Fato – Wine (fact_wine_gold)
+
+A tabela fato contém os valores numéricos representando medições químicas de cada amostra de vinho. Os dados foram disponibilizados originalmente em formato .csv/.data. No MVP, eles foram:
+
+Baixados localmente
+
+Carregados no Databricks via Upload Data
+
+Armazenados inicialmente no DBFS
+
+Processados pelas camadas Bronze → Silver → Gold
+
+2.2 Características do Dataset
+
+As variáveis representam medições laboratoriais, incluindo:
+
+Alcohol
+
+Malic acid
+
+Ash
+
+Alcalinity of ash
+
+Magnesium
+
+Total phenols
+
+Flavanoids
+
+Nonflavanoid phenols
+
+Proanthocyanins
+
+Color intensity
+
+Hue
+
+OD280/OD315
+
+Proline
+
+A variável Class identifica a categoria do vinho (1, 2 ou 3).
+
+Por se tratar de dados numéricos laboratoriais, não há informações sensíveis, e o dataset é amplamente aceito para fins acadêmicos.
+
+Modelagem e Catálogo de Dados
+
+Para estruturar e organizar os dados, foi adotado o modelo Esquema Estrela, onde:
+
+A tabela fato armazena todas as variáveis químicas.
+
+A tabela dimensão corresponde a uma única dimensão: dim_wine_class, contendo as descrições das classes.
+
+3.1 Estrutura do Esquema Estrela
+
+Tabela Fato: fact_wine_gold
+Contém os valores numéricos medidos para cada vinho.
+
+ Tabela Dimensão: dim_class_gold
+Contém as informações das classes 1, 2 e 3.
+
+3.2 Catálogo de Dados
+
+A seguir, alguns exemplos do catálogo:
+
+Nome da Coluna	Descrição	Tipo	Variação Geral
+Alcohol	Teor alcoólico	double	11.0 – 14.8
+Malic_acid	Acidez málica	double	0.7 – 5.8
+Ash	Cinzas	double	1.36 – 3.23
+Alcalinity_of_ash	Alcalinidade das cinzas	double	10 – 30
+Magnesium	Magnésio	int	70 – 162
+Total_phenols	Fenóis totais	double	0.98 – 3.88
+Color_intensity	Intensidade da cor	double	1.28 – 13.0
+Proline	Prolina	int	278 – 1680
+Class	Categoria do vinho	int	1, 2, 3
+
+Esse catálogo auxilia na compreensão dos intervalos esperados e também na validação de qualidade dos dados.
+
+Carga (ETL e Arquitetura Medallion)
+
+A arquitetura utilizada segue o padrão Medallion:
+
+ Bronze
+
+Recebe os dados exatamente como foram carregados.
+
+ Silver
+
+Inclui:
+
+padronização de nomes das colunas
+
+conversão de tipos
+
+criação de ID
+
+remoção de inconsistências
+
+ Gold
+
+Tabelas finais otimizadas para análise e consultas SQL.
+
+Todo o processo de carga está documentado no notebook.
+
+ Análise
+
+A análise contempla:
+
+5A – Qualidade dos Dados
+
+Foi verificado:
+
+ausência de valores nulos
+
+distribuição estatística
+
+coerência dos valores
+
+normalidade de variáveis
+
+O dataset é considerado limpo e pronto para análise, pois é amplamente utilizado para fins acadêmicos.
+
+5B – Análise das Perguntas
+
+As 15 perguntas foram respondidas utilizando:
+
+Spark SQL
 
 Python
-
-Pandas
 
 Matplotlib
 
 Seaborn
 
-Arquitetura Medallion
+Foram incluídos:
 
-Bronze → dados crus
+tabelas
 
-Silver → dados limpos
+métricas
 
-Gold → dados prontos para análise
+histogramas
 
-GitHub para versionamento
+scatter plots
 
-                   
+gráficos de pizza
 
- Perguntas Respondidas no Projeto
+comparações entre classes
 
-Maior valor de Alcohol
+Cada resposta inclui uma interpretação explicativa.
 
-Menor valor de Malic_acid
+Todas as análises encontram-se no notebook principal.
 
-Média de Ash por classe
+ Autoavaliação
+6.1 Atingimento dos Objetivos
 
-Mediana de Hue
+O objetivo de construir um pipeline de dados completo no Databricks foi atingido com sucesso. As etapas contempladas incluem:
 
-Maior valor de Proline
+Coleta e ingestão dos dados
 
-Quantidade de vinhos com Alcohol > 13
+Modelagem em arquitetura Medallion
 
-Média de Flavanoids por classe
+Construção de tabelas Delta
 
-Maior Color_intensity e sua classe
+Análise SQL + Python
 
-Média de Alcohol por classe
+Visualizações interpretativas
 
-Min e Max de Total_phenols
+Documentação técnica
 
-Qtde de vinhos com Nonflavanoid_phenols > 0.4
+As 15 perguntas foram respondidas de maneira clara e com suporte visual.
 
-Média de Magnesium da Classe 3
+6.2 Dificuldades Encontradas
 
-Desvio padrão de Alcalinity_of_ash
+As principais dificuldades envolveram:
 
-% de vinhos com Color_intensity > 5
+Entendimento da estrutura do Databricks Community Edition
 
-Média de Proline nos vinhos com Alcohol > 13
+Ajuste dos tipos de dados
 
-Cada pergunta contém:
+Construção do pipeline Bronze → Silver → Gold
 
-SQL
+Execução dos gráficos no cluster gratuito
 
-Gráfico em Python
-
-Texto interpretativo
-
-Modelagem e Arquitetura
-
-O pipeline foi construído conforme a Arquitetura Medallion:
-
- Bronze
-
-Dados crus carregados no DBFS via upload.
-
- Silver
-
-Tratamentos aplicados:
-
-renomeação de colunas
-
-conversões numéricas
-
-criação de chave id_wine
-
-verificação de consistência
-
- Gold
-
-Tabela analítica final utilizada nas 15 perguntas.
-
- Relatório Completo
-
- Para visualizar todos os gráficos, tabelas e interpretações:
-relatorio_mvp_wine.html (se você exportar o HTML)
-
-Pipeline completo desenvolvido em Databricks
- Pós-graduação em Ciência de Dados
+Apesar disso, nenhuma dificuldade comprometeu o objetivo final.
