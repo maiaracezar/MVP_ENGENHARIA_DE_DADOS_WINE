@@ -1,10 +1,10 @@
-# 🍷 MVP – Engenharia de Dados  
+# MVP – Engenharia de Dados  
 ## Análise Química do Wine Dataset  
 *(UCI Machine Learning Repository)*
 
 ---
 
-## 1. 🎯 Objetivo
+## 1.  Objetivo
 
 Este MVP tem como objetivo construir um **pipeline de dados em nuvem** utilizando o **Databricks Community Edition** para analisar o **Wine Dataset**, um conjunto de dados amplamente utilizado em projetos de *Machine Learning*.
 
@@ -24,7 +24,7 @@ Para isso, são respondidas **15 perguntas analíticas**, listadas abaixo.
 
 ---
 
-## 2. ❓ Perguntas Analíticas
+## 2.  Perguntas Analíticas
 
 1. Qual vinho apresenta o maior valor alcoólico (*Alcohol*)?  
 2. Qual é o menor valor de acidez málica (*Malic_acid*) registrado?  
@@ -44,7 +44,7 @@ Para isso, são respondidas **15 perguntas analíticas**, listadas abaixo.
 
 ---
 
-## 3. 📊 Fonte dos Dados e Coleta
+## 3.  Fonte dos Dados e Coleta
 
 Os dados utilizados neste projeto pertencem ao clássico **Wine Dataset**, disponibilizado publicamente no **UCI Machine Learning Repository**.
 
@@ -86,11 +86,11 @@ As variáveis representam medições laboratoriais, incluindo:
 - OD280/OD315  
 - Proline  
 
-> 📌 Por se tratar de dados laboratoriais, **não há dados sensíveis**, estando em conformidade com a **LGPD**.
+>  Por se tratar de dados laboratoriais, **não há dados sensíveis**, estando em conformidade com a **LGPD**.
 
 ---
 
-## 4. 🏗️ Modelagem e Catálogo de Dados
+## 4.  Modelagem e Catálogo de Dados
 
 Para organização analítica, foi adotado o **Esquema Estrela (Star Schema)**.
 
@@ -120,7 +120,7 @@ Para organização analítica, foi adotado o **Esquema Estrela (Star Schema)**.
 
 ---
 
-## 5. 🔄 Carga (ETL) e Arquitetura Medallion
+## 5.  Carga (ETL) e Arquitetura Medallion
 
 A arquitetura Medallion foi utilizada para garantir qualidade e governança dos dados:
 
@@ -138,7 +138,7 @@ A arquitetura Medallion foi utilizada para garantir qualidade e governança dos 
 
 ---
 
-## 6. 📈 Análise
+## 6.  Análise
 
 ### 6.1 Qualidade dos Dados
 
@@ -171,7 +171,7 @@ O notebook contém:
 
 ---
 
-## 7. 🧪 Autoavaliação
+## 7.  Autoavaliação
 
 ### 7.1 Atingimento dos Objetivos
 
@@ -191,4 +191,4 @@ As principais dificuldades enfrentadas foram:
 
 
 
-📌 Projeto desenvolvido como parte do portfólio acadêmico e profissional.
+Projeto desenvolvido como parte do portfólio acadêmico e profissional.
